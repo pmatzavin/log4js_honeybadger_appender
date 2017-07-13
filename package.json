@@ -1,7 +1,7 @@
 {
   "name": "log4js_honeybadger_appender",
   "version": "1.0.0",
-  "description": "",
+  "description": "log4js appender for posting errors to Honeybadger",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/_mocha --require should --reporter spec",
