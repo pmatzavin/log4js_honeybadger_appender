@@ -6,6 +6,10 @@ function notifyHoneybadger(filter_status, name, error, ...rest) {
         error = new Error(error);
     }
 
+    if (!error) {
+        return;
+    }
+
     if (error && error.status && filter_status.indexOf(error.status) !== -1) {
         return;
     }
@@ -13,11 +17,11 @@ function notifyHoneybadger(filter_status, name, error, ...rest) {
     let context = {};
     rest.forEach(r => {
         if (typeof r === 'string') {
-        error.message += `. ${r}`;
-    } else {
-        Object.assign(context, r);
-    }
-});
+            error.message += `. ${r}`;
+        } else {
+            Object.assign(context, r);
+        }
+    });
 
     let actionFallback = context.action;
     let componentFallback = context.component;
@@ -25,7 +29,10 @@ function notifyHoneybadger(filter_status, name, error, ...rest) {
     delete context.action;
     delete context.component;
 
-    let { headers = {}, action = actionFallback, component = componentFallback, params = {} } = error;
+    let {
+        headers = {}, action = actionFallback, component = componentFallback, params = {}
+    } = error;
+
     Object.assign(context, error.context);
 
     Honeybadger.notify(error, {
@@ -41,7 +48,9 @@ function notifyHoneybadger(filter_status, name, error, ...rest) {
     });
 }
 
-const honeyBadgerAppender = ({ filter_status = [] }) => {
+const honeyBadgerAppender = ({
+    filter_status = []
+}) => {
     return logEvent => {
         if (logEvent.level.level < log4jsErrorLevel) {
             return;
@@ -50,9 +59,15 @@ const honeyBadgerAppender = ({ filter_status = [] }) => {
     };
 };
 
-function configure(config) {
-    const { filter_status } = config;
-    return honeyBadgerAppender({ filter_status });
+function configure(config = {}) {
+    const {
+        filter_status = []
+    } = config;
+    return honeyBadgerAppender({
+        filter_status
+    });
 }
 
-module.exports = { configure };
+module.exports = {
+    configure
+};
