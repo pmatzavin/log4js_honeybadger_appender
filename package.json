@@ -7,12 +7,26 @@
     "test": "./node_modules/.bin/_mocha --require should --reporter spec",
     "test-cov": "node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --require should -R spec"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "pmatzavin",
+  "license": "MIT",
   "dependencies": {
     "honeybadger": "^1.2.1",
     "log4js": "^2.0.1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pmatzavin/log4js_honeybadger_appender.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pmatzavin/log4js_honeybadger_appender/issues"
+  },
+  "homepage": "https://github.com/pmatzavin/log4js_honeybadger_appender",
+  "keywords": [
+    "honeybadger",
+    "log4js",
+    "logs",
+    "errors"
+  ],
   "devDependencies": {
     "istanbul": "^0.4.5",
     "mocha": "^3.4.2",
