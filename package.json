@@ -1,6 +1,6 @@
 {
   "name": "log4js_honeybadger_appender",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "log4js appender for posting errors to Honeybadger",
   "main": "index.js",
   "scripts": {
