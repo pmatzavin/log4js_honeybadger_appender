@@ -42,7 +42,7 @@ describe('log4js_honeybadger_appender', () => {
             context: {},
             headers: {},
             cgiData: {
-                'server-software': 'Node v6.2.2'
+                'server-software': `Node ${process.version}`
             },
             action: undefined,
             component: 'testCategoryName',
@@ -75,6 +75,34 @@ describe('log4js_honeybadger_appender', () => {
             data: err
         });
         notifySpy.callCount.should.equal(0);
+    });
+
+    it('should default the component to name and then compute the fingerprint', () => {
+        const err = new Error('omg');
+        err.status = 200;
+        err.action = '/test/endpoint';
+        appender.configure()({
+            level: {
+                level: 40000
+            },
+            categoryName: 'testCategoryName',
+            data: err
+        });
+        notifySpy.callCount.should.equal(1);
+        notifySpy.args[0][1].should.eql({
+            context: {
+            },
+            headers: {
+            },
+            cgiData: {
+                'server-software': `Node ${process.version}`
+            },
+            action: '/test/endpoint',
+            component: 'testCategoryName',
+            params: {
+            },
+            fingerprint: 'testCategoryName_/test/endpoint'
+        });
     });
 
     it('should compute the fingerprint using the component and the action if both exists', () => {
@@ -138,7 +166,7 @@ describe('log4js_honeybadger_appender', () => {
             },
             headers: {},
             cgiData: {
-                'server-software': 'Node v6.2.2'
+                'server-software': `Node ${process.version}`
             },
             action: '/test/endpoint',
             component: 'testController',

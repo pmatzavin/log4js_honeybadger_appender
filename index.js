@@ -35,6 +35,8 @@ function notifyHoneybadger(filter_status, name, error, ...rest) {
 
     Object.assign(context, error.context);
 
+    const computedComponent = component || name;
+
     Honeybadger.notify(error, {
         context,
         headers,
@@ -42,9 +44,9 @@ function notifyHoneybadger(filter_status, name, error, ...rest) {
             'server-software': `Node ${process.version}`
         },
         action,
-        component: component || name,
+        component: computedComponent,
         params,
-        fingerprint: action && component ? `${component}_${action}` : name
+        fingerprint: action && computedComponent ? `${computedComponent}_${action}` : name
     });
 }
 
